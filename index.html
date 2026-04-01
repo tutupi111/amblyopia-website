@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>弱视儿童康复训练站</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>弱视儿童康复训练网站</h1>
+      <p>通过趣味小游戏进行视觉刺激、眼球运动、双眼融合与注意力训练</p>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <h2>功能规划（完整版）</h2>
+        <ul>
+          <li><b>账户与角色：</b>家长、治疗师、儿童档案、多子女管理</li>
+          <li><b>评估与建档：</b>基础视力、遮盖依从性、立体视与融合能力记录</li>
+          <li><b>训练处方：</b>按阶段自动生成每日任务（时长/难度/频次）</li>
+          <li><b>游戏训练库：</b>对比敏感、注视稳定、扫视追踪、手眼协调、视觉记忆、双眼融合</li>
+          <li><b>双眼视觉模块：</b>红蓝眼镜分视训练、融合范围训练、抑制减弱训练</li>
+          <li><b>数据与反馈：</b>完成率、准确率、连续打卡、周报/月报</li>
+          <li><b>家长指导：</b>护眼提醒、训练注意事项、线下复查建议</li>
+          <li><b>安全与隐私：</b>儿童数据最小化、权限控制、数据脱敏</li>
+        </ul>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <h3>今日训练任务</h3>
+          <div id="tasks"></div>
+          <button id="resetTasks">重置任务</button>
+        </article>
+
+        <article class="panel">
+          <h3>训练记录</h3>
+          <p>连续打卡：<span id="streak">0</span> 天</p>
+          <p>总训练次数：<span id="totalSessions">0</span></p>
+          <button id="completeSession">完成一次训练</button>
+        </article>
+      </section>
+
+      <section class="panel">
+        <h2>小游戏训练区</h2>
+
+        <div class="game">
+          <h3>1) 对比敏感度点击</h3>
+          <p>在图中找出浅色圆点并点击，逐步提升视觉分辨能力。</p>
+          <div id="contrastGame" class="playground"></div>
+          <p>得分：<span id="contrastScore">0</span></p>
+          <button id="startContrast">开始游戏</button>
+        </div>
+
+        <div class="game">
+          <h3>2) 视动追踪</h3>
+          <p>盯住移动目标，目标会逐渐加速。</p>
+          <div id="trackingGame" class="playground"></div>
+          <button id="startTracking">开始追踪</button>
+        </div>
+
+        <div class="game">
+          <h3>3) 视觉记忆翻牌</h3>
+          <p>翻出相同图形，训练视觉记忆和注意力。</p>
+          <div id="memoryGame" class="memory-grid"></div>
+          <p>步数：<span id="memoryMoves">0</span></p>
+          <button id="startMemory">开始翻牌</button>
+        </div>
+
+        <div class="game anaglyph-wrap">
+          <h3>4) 红蓝分视-融合对齐（经典 Brock String 思路简化）</h3>
+          <p class="tip">请佩戴红蓝眼镜（红镜片在左眼）：使用滑块让红蓝目标重合，训练双眼融合。</p>
+          <div id="fusionGame" class="playground anaglyph-board">
+            <div id="fusionRed" class="fusion-dot red-eye"></div>
+            <div id="fusionBlue" class="fusion-dot blue-eye"></div>
+          </div>
+          <label for="fusionSlider">水平微调</label>
+          <input id="fusionSlider" type="range" min="-120" max="120" value="40" />
+          <p>融合误差：<span id="fusionError">40</span> px（越小越好）</p>
+          <button id="resetFusion">重置融合训练</button>
+        </div>
+
+        <div class="game anaglyph-wrap">
+          <h3>5) 红蓝分视-双眼接球（经典 双眼平衡+手眼协调）</h3>
+          <p class="tip">佩戴红蓝眼镜，观察红蓝信息融合后点击“融合球”。</p>
+          <div id="binocularCatchGame" class="playground anaglyph-board"></div>
+          <p>命中：<span id="catchHit">0</span> / <span id="catchRound">0</span></p>
+          <button id="startCatch">开始接球</button>
+        </div>
+
+        <div class="game">
+          <h3>6) 方块拼接训练（Tetris-like 开源玩法）</h3>
+          <p class="tip">基于经典下落方块机制自行实现，可用于空间感知、预判与手眼协调训练。</p>
+          <canvas id="tetrisGame" class="tetris-canvas" width="240" height="360" aria-label="方块拼接训练画布"></canvas>
+          <p>分数：<span id="tetrisScore">0</span></p>
+          <div class="controls">
+            <button id="startTetris">开始方块训练</button>
+            <button id="pauseTetris">暂停/继续</button>
+          </div>
+          <p class="tip">键盘操作：← → 移动，↑ 旋转，↓ 加速下落，空格硬降。</p>
+        </div>
+
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

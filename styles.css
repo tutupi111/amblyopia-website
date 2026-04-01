@@ -1,0 +1,217 @@
+:root {
+  --bg: #f7fbff;
+  --panel: #ffffff;
+  --text: #1f2a44;
+  --primary: #2d73ff;
+  --ok: #14a44d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.hero {
+  background: linear-gradient(120deg, #2d73ff, #63a1ff);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.panel {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+}
+
+.playground {
+  position: relative;
+  height: 180px;
+  border: 2px dashed #bdd3ff;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  background: #f9fcff;
+}
+
+.target {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.game {
+  margin-top: 1rem;
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0.5rem 0;
+}
+
+.card {
+  height: 58px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: #2d73ff;
+  color: transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card.open,
+.card.matched {
+  background: #e9f1ff;
+  color: #1f2a44;
+}
+
+.card.matched {
+  outline: 2px solid var(--ok);
+}
+
+.anaglyph-wrap {
+  border-top: 1px solid #e8efff;
+  padding-top: 1rem;
+}
+
+.tip {
+  color: #41537e;
+  margin-bottom: 0.35rem;
+}
+
+.anaglyph-board {
+  background: radial-gradient(circle at center, #fff, #f1f7ff);
+}
+
+.fusion-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 68px;
+  height: 68px;
+  margin-left: -34px;
+  margin-top: -34px;
+  border-radius: 50%;
+  border: 3px solid;
+  transition: transform 0.15s linear;
+}
+
+.red-eye {
+  border-color: rgba(255, 0, 0, 0.7);
+  background: rgba(255, 0, 0, 0.25);
+  mix-blend-mode: multiply;
+}
+
+.blue-eye {
+  border-color: rgba(0, 90, 255, 0.78);
+  background: rgba(0, 90, 255, 0.26);
+  mix-blend-mode: multiply;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+.catch-target {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.catch-target::before,
+.catch-target::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid;
+}
+
+.catch-target::before {
+  border-color: rgba(255, 0, 0, 0.8);
+  transform: translateX(calc(var(--disp) * -0.5));
+}
+
+.catch-target::after {
+  border-color: rgba(0, 102, 255, 0.85);
+  transform: translateX(calc(var(--disp) * 0.5));
+}
+
+.catch-target.hit::before,
+.catch-target.hit::after {
+  border-color: rgba(20, 164, 77, 0.9);
+}
+
+.result {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  color: #1f2a44;
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.tetris-canvas {
+  display: block;
+  width: 240px;
+  height: 360px;
+  max-width: 100%;
+  background: #111827;
+  border: 2px solid #2d73ff;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
