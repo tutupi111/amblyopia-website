@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>弱视儿童康复训练站</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>弱视儿童康复训练网站</h1>
+      <p>先选游戏，再进入独立训练页，避免多游戏同时操作干扰</p>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <h2>训练分类</h2>
+        <p><b>增视训练：</b>以黑白条栅、对比敏感和视觉追踪为主，强化弱视眼刺激。</p>
+        <p><b>双眼视觉训练：</b>以红蓝眼镜分视为核心，提升融合与双眼协调能力。</p>
+      </section>
+
+      <section class="panel">
+        <h2>今日训练任务</h2>
+        <div id="tasks"></div>
+        <div class="controls">
+          <button id="resetTasks">重置任务</button>
+          <button id="completeSession">完成一次训练</button>
+        </div>
+        <p>连续打卡：<span id="streak">0</span> 天 ｜ 总训练次数：<span id="totalSessions">0</span></p>
+      </section>
+
+      <section class="panel">
+        <h2>游戏大厅（点击进入独立页面）</h2>
+
+        <h3>一、增视训练</h3>
+        <div class="hub-grid">
+          <button class="hub-card" data-open="screen-contrast">对比敏感点击</button>
+          <button class="hub-card" data-open="screen-tracking">视动追踪</button>
+          <button class="hub-card" data-open="screen-memory">视觉记忆翻牌</button>
+          <button class="hub-card" data-open="screen-grating">动态黑白条栅</button>
+          <button class="hub-card" data-open="screen-tetris">方块拼接训练</button>
+        </div>
+
+        <h3>二、双眼视觉训练（红蓝分视）</h3>
+        <div class="hub-grid">
+          <button class="hub-card" data-open="screen-fusion">融合对齐</button>
+          <button class="hub-card" data-open="screen-catch">双眼接球</button>
+        </div>
+      </section>
+    </main>
+
+    <div id="gameModal" class="game-modal hidden" role="dialog" aria-modal="true">
+      <div class="game-shell panel">
+        <div class="modal-head">
+          <h2 id="modalTitle">训练游戏</h2>
+          <button id="closeModal">返回大厅</button>
+        </div>
+
+        <section id="screen-contrast" class="game-screen hidden" data-title="对比敏感点击">
+          <p>找出浅色圆点并点击，逐步提升视觉分辨能力。</p>
+          <div id="contrastGame" class="playground"></div>
+          <p>得分：<span id="contrastScore">0</span></p>
+          <button id="startContrast">开始游戏</button>
+        </section>
+
+        <section id="screen-tracking" class="game-screen hidden" data-title="视动追踪">
+          <p>盯住移动目标，目标会逐渐加速。</p>
+          <div id="trackingGame" class="playground"></div>
+          <button id="startTracking">开始追踪</button>
+        </section>
+
+        <section id="screen-memory" class="game-screen hidden" data-title="视觉记忆翻牌">
+          <p>翻出相同图形，训练视觉记忆和注意力。</p>
+          <div id="memoryGame" class="memory-grid"></div>
+          <p>步数：<span id="memoryMoves">0</span></p>
+          <button id="startMemory">开始翻牌</button>
+        </section>
+
+        <section id="screen-grating" class="game-screen hidden" data-title="动态黑白条栅">
+          <p>黑白条栅会动态漂移，注视中心并判断条纹运动方向。</p>
+          <canvas id="gratingGame" class="tetris-canvas" width="320" height="180"></canvas>
+          <p>方向判断得分：<span id="gratingScore">0</span></p>
+          <div class="controls">
+            <button id="startGrating">开始条栅训练</button>
+            <button id="guessLeft">向左</button>
+            <button id="guessRight">向右</button>
+          </div>
+        </section>
+
+        <section id="screen-fusion" class="game-screen hidden" data-title="红蓝分视融合对齐">
+          <p class="tip">佩戴红蓝眼镜（红镜片在左眼），让红蓝目标重合。</p>
+          <div id="fusionGame" class="playground anaglyph-board">
+            <div id="fusionRed" class="fusion-dot red-eye"></div>
+            <div id="fusionBlue" class="fusion-dot blue-eye"></div>
+          </div>
+          <label for="fusionSlider">水平微调</label>
+          <input id="fusionSlider" type="range" min="-120" max="120" value="40" />
+          <p>融合误差：<span id="fusionError">40</span> px</p>
+          <button id="resetFusion">重置融合训练</button>
+        </section>
+
+        <section id="screen-catch" class="game-screen hidden" data-title="红蓝分视双眼接球">
+          <p class="tip">佩戴红蓝眼镜，观察融合后点击目标。</p>
+          <div id="binocularCatchGame" class="playground anaglyph-board"></div>
+          <p>命中：<span id="catchHit">0</span> / <span id="catchRound">0</span></p>
+          <button id="startCatch">开始接球</button>
+        </section>
+
+        <section id="screen-tetris" class="game-screen hidden" data-title="方块拼接训练">
+          <p>独立游戏页中操作，已修复方向键导致页面滚动的问题。</p>
+          <canvas id="tetrisGame" class="tetris-canvas" width="240" height="360"></canvas>
+          <p>分数：<span id="tetrisScore">0</span></p>
+          <div class="controls">
+            <button id="startTetris">开始方块训练</button>
+            <button id="pauseTetris">暂停/继续</button>
+          </div>
+          <p class="tip">键盘：← → 移动，↑ 旋转，↓ 下落，空格硬降。</p>
+        </section>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
